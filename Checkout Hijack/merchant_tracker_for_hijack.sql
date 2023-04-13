@@ -1,21 +1,19 @@
- SELECT
+SELECT
   t1.*,
   t2.shop_name,
-  t2.shop_storefront_url,
   t2.shop_domain,
-  t2.shop_permanent_domain,
+  t2.currently_associated_shopify_partner_id,
+  t2.currently_associated_partner_name,
   t3.merchant_name,
   t3.current_msm_name,
   t4.checkout_one_checkouts_annualized,
   t4.checkout_classic_checkouts_annualized,
   t4.checkout_one_gmv_annualized,
   t4.checkout_classic_gmv_annualized,
-  t5.merchant_gmv_usd_annualized,
   t5.hijack_gmv_annualized,
-  t5.shopify_gmv_annualized,
   t6.shopify_gmv_annualized,
-  t6.gpv_annualized
-
+  t7.is_on_c1,
+  t7.migration_experience_type
 FROM (
   SELECT
     DISTINCT _merchant_key,
@@ -38,7 +36,9 @@ LEFT JOIN (
     shop_name,
     shop_storefront_url,
     shop_domain,
-    shop_permanent_domain
+    shop_permanent_domain,
+    currently_associated_shopify_partner_id,
+    currently_associated_partner_name,
   FROM
     `shopify-data-bigquery-global.finance.shop_dimension`
   WHERE
@@ -154,5 +154,14 @@ LEFT JOIN (
     1) t6
 ON
   t1.shop_id = t6.shop_id
+LEFT JOIN (
+  SELECT
+    shop_id,
+    is_on_c1,
+    migration_experience_type
+  FROM
+    seamster_backroom_checkout.c1_migration_status_dimension ) t7
+ON
+  t7.shop_id = t1.shop_id
 ORDER BY
   1
