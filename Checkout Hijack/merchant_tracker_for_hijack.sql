@@ -1,5 +1,21 @@
-SELECT
-  *
+ SELECT
+  t1.*,
+  t2.shop_name,
+  t2.shop_storefront_url,
+  t2.shop_domain,
+  t2.shop_permanent_domain,
+  t3.merchant_name,
+  t3.current_msm_name,
+  t4.checkout_one_checkouts_annualized,
+  t4.checkout_classic_checkouts_annualized,
+  t4.checkout_one_gmv_annualized,
+  t4.checkout_classic_gmv_annualized,
+  t5.merchant_gmv_usd_annualized,
+  t5.hijack_gmv_annualized,
+  t5.shopify_gmv_annualized,
+  t6.shopify_gmv_annualized,
+  t6.gpv_annualized
+
 FROM (
   SELECT
     DISTINCT _merchant_key,
