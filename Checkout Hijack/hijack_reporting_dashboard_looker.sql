@@ -224,7 +224,7 @@ LEFT JOIN (
           order_id
         FROM
           fulfillments_per_order)
-        AND gateways.payment_gateway_name = "Cash on Delivery (COD)"
+        AND gateways.payment_gateway_name in ( "Cash on Delivery (COD)","cash_on_delivery")
         AND DATE(DATE_TRUNC(reported_at, month)) < DATE_TRUNC(CURRENT_DATE(), month)
       GROUP BY
         1
